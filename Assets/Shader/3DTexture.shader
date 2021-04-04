@@ -1,6 +1,7 @@
 ﻿Shader "VolumeRendering/3D Texture"
 {
 
+    //外からデータアクセスするのに必要
     Properties
     {
         _Volume("Volume", 3D) = "" {}
@@ -27,7 +28,9 @@
     {
         v2f o;
         o.vertex = UnityObjectToClipPos(v.vertex);
-        o.uv = v.vertex.xyz * 0.5 + 0.5;
+        float4 wpos = mul(unity_ObjectToWorld, v.vertex);
+        o.uv = wpos.xyz * 0.5 + 0.5;
+
         return o;
     }
 
